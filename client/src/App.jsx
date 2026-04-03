@@ -1,9 +1,3 @@
-import React, { useState, useEffect } from 'react';
-import DutyForm from './components/DutyForm';
-import DutyChart from './components/DutyChart';
-import DriverManagement from './components/DriverManagement';
-import './index.css';
-
 function App() {
   const [duties, setDuties] = useState([]);
   const [view, setView] = useState('form'); // 'form', 'chart', or 'drivers'
@@ -25,22 +19,22 @@ function App() {
   return (
     <div className="container">
       <h1>Sikar Duty Management</h1>
-      
+
       <div style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
-        <button 
-          onClick={() => setView('form')} 
+        <button
+          onClick={() => setView('form')}
           style={{ background: view === 'form' ? 'var(--primary-hover)' : 'var(--primary)', padding: '0.6rem 1rem' }}
         >
           Duty Form
         </button>
-        <button 
-          onClick={() => { setView('chart'); fetchDuties(); }} 
+        <button
+          onClick={() => { setView('chart'); fetchDuties(); }}
           style={{ background: view === 'chart' ? 'var(--primary-hover)' : 'var(--primary)', padding: '0.6rem 1rem' }}
         >
           View Chart
         </button>
-        <button 
-          onClick={() => setView('drivers')} 
+        <button
+          onClick={() => setView('drivers')}
           style={{ background: view === 'drivers' ? '#2563eb' : '#3b82f6', padding: '0.6rem 1rem' }}
         >
           Manage Drivers
@@ -48,17 +42,17 @@ function App() {
       </div>
 
       {view === 'form' ? (
-        <DutyForm 
-          onDutyAdded={handleDutyUpdate} 
+        <DutyForm
+          onDutyAdded={handleDutyUpdate}
           globalDrivers={globalDrivers}
           setGlobalDrivers={setGlobalDrivers}
         />
       ) : view === 'chart' ? (
         <DutyChart duties={duties} />
       ) : (
-        <DriverManagement 
-          globalDrivers={globalDrivers} 
-          setGlobalDrivers={setGlobalDrivers} 
+        <DriverManagement
+          globalDrivers={globalDrivers}
+          setGlobalDrivers={setGlobalDrivers}
         />
       )}
 
