@@ -10,6 +10,7 @@ router.post('/add', async (req, res) => {
         await newDuty.save();
         res.status(201).json({ message: 'Duty added successfully', data: newDuty });
     } catch (error) {
+        console.error('Error adding duty:', error);
         res.status(500).json({ error: error.message });
     }
 });
@@ -20,6 +21,7 @@ router.get('/all', async (req, res) => {
         const duties = await Duty.find().sort({ createdAt: -1 });
         res.status(200).json(duties);
     } catch (error) {
+        console.error('Error getting duties:', error);
         res.status(500).json({ error: error.message });
     }
 });
@@ -34,6 +36,7 @@ router.post('/add-bulk', async (req, res) => {
         res.status(201).json({ message: 'Duties replaced successfully', data: newDuties });
 
     } catch (error) {
+        console.error('Error in bulk add:', error);
         res.status(500).json({ error: error.message });
     }
 });
