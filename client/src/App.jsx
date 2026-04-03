@@ -34,7 +34,7 @@ function App() {
           Duty Form
         </button>
         <button
-          onClick={() => { setView('chart'); fetchDuties(); }}
+          onClick={() => setView('chart')}
           style={{ background: view === 'chart' ? 'var(--primary-hover)' : 'var(--primary)', padding: '0.6rem 1rem' }}
         >
           View Chart
