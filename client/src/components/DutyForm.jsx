@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 const defaultDuties = [
     { vehicleNo: 'RJ14PF9610', time: '4:00 AM', route: 'SKR-DLH-SKR', driverName: 'मुकेश पुरी' },
@@ -73,21 +72,13 @@ const DutyForm = ({ onDutyAdded, globalDrivers = [], setGlobalDrivers }) => {
 
     const handleSubmit = async () => {
         setLoading(true);
-        const API_URL = (import.meta.env.VITE_API_URL || `http://${window.location.hostname}:5000`).replace(/\/$/, "");
-        try {
-            // Bulk insert via single API endpoint to avoid network spam
-            await axios.post(`${API_URL}/api/duties/add-bulk`, duties);
-
+        // Simulate a small delay for premium feel
+        setTimeout(() => {
             alert('All ' + duties.length + ' bus duties generated successfully!');
-            // Reset to step 1 (keep current user-edited defaults for UX, or full reset)
-            setCurrentStep(0);
-            onDutyAdded();
-        } catch (error) {
-            console.error('Error adding duties:', error);
-            alert('Failed to generate final duty chart.');
-        } finally {
             setLoading(false);
-        }
+            onDutyAdded(duties);
+            setCurrentStep(0);
+        }, 800);
     };
 
     const progressPercentage = ((currentStep + 1) / duties.length) * 100;

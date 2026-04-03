@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import DutyForm from './components/DutyForm';
 import DutyChart from './components/DutyChart';
 import DriverManagement from './components/DriverManagement';
@@ -17,20 +16,11 @@ function App() {
     localStorage.setItem('sikar_drivers', JSON.stringify(globalDrivers));
   }, [globalDrivers]);
 
-  const API_URL = (import.meta.env.VITE_API_URL || `http://${window.location.hostname}:5000`).replace(/\/$/, "");
-
-  const fetchDuties = async () => {
-    try {
-      const response = await axios.get(`${API_URL}/api/duties/all`);
-      setDuties(response.data);
-    } catch (error) {
-      console.error('Error fetching duties:', error);
-    }
+  // Handle duty updates locally without a backend
+  const handleDutyUpdate = (newDuties) => {
+    setDuties(newDuties);
+    setView('chart');
   };
-
-  useEffect(() => {
-    fetchDuties();
-  }, []);
 
   return (
     <div className="container">
@@ -59,7 +49,7 @@ function App() {
 
       {view === 'form' ? (
         <DutyForm 
-          onDutyAdded={() => { fetchDuties(); setView('chart'); }} 
+          onDutyAdded={handleDutyUpdate} 
           globalDrivers={globalDrivers}
           setGlobalDrivers={setGlobalDrivers}
         />
