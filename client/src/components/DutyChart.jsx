@@ -1,8 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import html2canvas from 'html2canvas';
 
 const DutyChart = ({ duties }) => {
     const tableRef = useRef(null);
+    const [loading, setLoading] = useState(false);
 
     const today = new Date().toLocaleDateString('en-GB', {
         day: 'numeric',
@@ -12,21 +13,42 @@ const DutyChart = ({ duties }) => {
 
     const handleDownload = async () => {
         if (!tableRef.current) return;
+        const originalStyle = tableRef.current.style.cssText;
+        
         try {
+            setLoading(true);
+            // Temporarily force desktop-like styles for unclipped capture
+            tableRef.current.style.width = '1200px';
+            tableRef.current.style.maxWidth = 'none';
+            tableRef.current.style.overflow = 'visible';
+            tableRef.current.style.transform = 'scale(1)'; // ensure no weird scales interfere
+            
+            // Wait slightly for the reflow
+            await new Promise(resolve => setTimeout(resolve, 150));
+
             const canvas = await html2canvas(tableRef.current, {
-                scale: 2, // High resolution for mobile zooming
-                backgroundColor: '#0f172a', // matches --bg-dark
-                windowWidth: tableRef.current.scrollWidth,
-                width: tableRef.current.scrollWidth
+                scale: 3, // Very high resolution
+                backgroundColor: '#0f172a',
+                useCORS: true,
+                logging: false,
+                width: 1200,
+                windowWidth: 1200
             });
-            const image = canvas.toDataURL("image/png");
+
+            // Restore original styles immediately
+            tableRef.current.style.cssText = originalStyle;
+
+            const image = canvas.toDataURL("image/png", 1.0);
             const link = document.createElement('a');
             link.href = image;
-            link.download = `Duty_Chart_${new Date().toISOString().split('T')[0]}.png`;
+            link.download = `Sikar_Duty_Chart_${new Date().toISOString().split('T')[0]}.png`;
             link.click();
         } catch (error) {
             console.error('Error taking screenshot:', error);
             alert('Failed to generate image download.');
+            tableRef.current.style.cssText = originalStyle;
+        } finally {
+            setLoading(false);
         }
     };
 
