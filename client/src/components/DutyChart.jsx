@@ -13,31 +13,16 @@ const DutyChart = ({ duties }) => {
 
     const handleDownload = async () => {
         if (!tableRef.current) return;
-        const originalStyle = tableRef.current.style.cssText;
-        
         try {
             setLoading(true);
-            // Temporarily force desktop-like styles for unclipped capture
-            tableRef.current.style.width = '1200px';
-            tableRef.current.style.maxWidth = 'none';
-            tableRef.current.style.overflow = 'visible';
-            tableRef.current.style.transform = 'scale(1)'; // ensure no weird scales interfere
-            
-            // Wait slightly for the reflow
-            await new Promise(resolve => setTimeout(resolve, 150));
-
             const canvas = await html2canvas(tableRef.current, {
-                scale: 3, // Very high resolution
+                scale: 4, // Ultra-high resolution
                 backgroundColor: '#0f172a',
                 useCORS: true,
                 logging: false,
                 width: 1200,
                 windowWidth: 1200
             });
-
-            // Restore original styles immediately
-            tableRef.current.style.cssText = originalStyle;
-
             const image = canvas.toDataURL("image/png", 1.0);
             const link = document.createElement('a');
             link.href = image;
@@ -45,8 +30,6 @@ const DutyChart = ({ duties }) => {
             link.click();
         } catch (error) {
             console.error('Error taking screenshot:', error);
-            alert('Failed to generate image download.');
-            tableRef.current.style.cssText = originalStyle;
         } finally {
             setLoading(false);
         }
