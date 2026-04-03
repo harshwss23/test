@@ -22,7 +22,7 @@ const defaultDuties = [
     { vehicleNo: 'RJ14PF9612', time: '05:20 AM', route: 'SKR-JPR-CHR', driverName: 'अजय सिंह' },
     { vehicleNo: 'RJ14PF2390', time: '07:15 AM', route: 'SKR-JPR-CHR', driverName: 'भंवर सिंह' },
     { vehicleNo: 'RJ14PF2421', time: '5:00 PM', route: 'SKR-DLH', driverName: 'प्रकाश/खनिया लाल' },
-    { vehicleNo: 'RJ20PB2396', time: '6:00 AM', route: 'SKR-LDN-JPR-LDN. NH', driverName: 'सुभाष नहेरा' }
+    { vehicleNo: 'RJ20PB2396', time: '6:00 AM', route: 'SKR-LDN-JPR-LDN. NH', driverName: 'सुभाष नहेरा / जय सिंह' }
 ];
 
 // Normalize drivers to individual names by splitting on '/'
