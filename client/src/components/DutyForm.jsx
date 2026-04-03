@@ -73,7 +73,7 @@ const DutyForm = ({ onDutyAdded, globalDrivers = [], setGlobalDrivers }) => {
 
     const handleSubmit = async () => {
         setLoading(true);
-        const API_URL = import.meta.env.VITE_API_URL || `http://${window.location.hostname}:5000`;
+        const API_URL = (import.meta.env.VITE_API_URL || `http://${window.location.hostname}:5000`).replace(/\/$/, "");
         try {
             // Bulk insert via single API endpoint to avoid network spam
             await axios.post(`${API_URL}/api/duties/add-bulk`, duties);

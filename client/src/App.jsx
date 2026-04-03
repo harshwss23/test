@@ -17,7 +17,7 @@ function App() {
     localStorage.setItem('sikar_drivers', JSON.stringify(globalDrivers));
   }, [globalDrivers]);
 
-  const API_URL = import.meta.env.VITE_API_URL || `http://${window.location.hostname}:5000`;
+  const API_URL = (import.meta.env.VITE_API_URL || `http://${window.location.hostname}:5000`).replace(/\/$/, "");
 
   const fetchDuties = async () => {
     try {
