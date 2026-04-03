@@ -1,3 +1,9 @@
+import React, { useState, useEffect } from 'react';
+import DutyForm from './components/DutyForm';
+import DutyChart from './components/DutyChart';
+import DriverManagement from './components/DriverManagement';
+import './index.css';
+
 function App() {
   const [duties, setDuties] = useState([]);
   const [view, setView] = useState('form'); // 'form', 'chart', or 'drivers'
