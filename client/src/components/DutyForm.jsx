@@ -42,9 +42,19 @@ const uniqueTimes = [...new Set(defaultDuties.map(d => d.time))];
 const uniqueRoutes = [...new Set(defaultDuties.map(d => d.route))];
 
 const DutyForm = ({ onDutyAdded, globalDrivers = [], setGlobalDrivers }) => {
-    const [duties, setDuties] = useState(defaultDuties.map(d => ({ ...d })));
+    const [duties, setDuties] = useState(() => {
+        const saved = localStorage.getItem('sikar_duties_draft');
+        if (saved) return JSON.parse(saved);
+        return defaultDuties.map(d => ({ ...d }));
+    });
+    
     const [currentStep, setCurrentStep] = useState(0);
     const [loading, setLoading] = useState(false);
+
+    // Persist duties to localStorage on change
+    React.useEffect(() => {
+        localStorage.setItem('sikar_duties_draft', JSON.stringify(duties));
+    }, [duties]);
     
     // Custom drivers added from the form interface
     const [customDriverInput, setCustomDriverInput] = useState('');
