@@ -60,7 +60,7 @@ const DutyChart = ({ duties }) => {
                     style={{ background: '#10b981', display: 'flex', gap: '0.5rem', alignItems: 'center' }}
                 >
                     <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                    Download Chart
+                    {loading ? 'Capturing High-Res Image...' : 'Download Chart'}
                 </button>
             </div>
             <div className="duty-table-container" ref={tableRef} style={{ padding: '1rem', borderRadius: '1rem' }}>
